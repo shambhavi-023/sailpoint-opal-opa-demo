@@ -1,0 +1,25 @@
+name: OPA Policy CI & OPAL Sync
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-rego:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup OPA CLI (v1.x)
+        uses: openpolicyagent/setup-opa@v2
+        with:
+          version: 'latest'
+
+      - name: Step 1 - Check Rego Formatting
+        run: opa fmt --fail policy.rego policy_test.rego
+
+      - name: Step 2 - Execute OPA Unit Tests
+        run: opa test . -v
