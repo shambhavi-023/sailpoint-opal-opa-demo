@@ -1,0 +1,5 @@
+
+{
+  "allowed_departments": ["SecOps", "CloudSecurity"],
+  "high_sensitivity_Clearance_required": "L3"
+}
