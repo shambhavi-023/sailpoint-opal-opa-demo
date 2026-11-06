@@ -19,7 +19,10 @@ jobs:
           version: 'latest'
 
       - name: Step 1 - Check Rego Formatting
-        run: opa fmt --fail policy.rego policy_test.rego
+        run: |
+          opa fmt --fail policies/policy.rego
+          opa fmt --fail tests/policy_test.rego
 
       - name: Step 2 - Execute OPA Unit Tests
-        run: opa test . -v
+        # We pass both folders so OPA can compile policies/ and run tests/ in parallel
+        run: opa test policies/ tests/ -v
